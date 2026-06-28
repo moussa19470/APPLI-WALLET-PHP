@@ -116,3 +116,29 @@ function faireUnRetrait(): void {
 
     afficheMessage("Retrait effectue avec succes, frais appliques : {$frais} CFA");
 }
+
+
+function afficheListeTransaction(array $transactions, array $wallets): void {
+    foreach ($transactions as $transaction) {
+        echo "Montant : {$transaction['montant']}\n";
+        $indexClient = $transaction['indexClient'];
+        $client = $wallets[$indexClient];
+        echo "Titulaire : {$client['client']}\n";
+    }
+}
+
+function afficheListeTransactionParTelephone(array $transactions, array $wallets): void {
+    $telephone = saisirTelephone();
+    $index = existTelephone($telephone, $wallets);
+
+    if ($index == -1) {
+        afficheMessage("Telephone introuvable");
+        return;
+    }
+
+    foreach ($transactions as $transaction) {
+        if ($transaction['indexClient'] == $index) {
+            echo "Montant : {$transaction['montant']}\n";
+        }
+    }
+}
