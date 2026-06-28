@@ -17,13 +17,12 @@ function estPositifSolde(array $wallet): bool {
 }
 
 function estUniqueDansSystem(array $wallets, array $wallet): bool {
-    foreach ($wallets as $index => $element) {
-        if ($element['telephone'] == $wallet['telephone'] ||
-            $element['codeSecret'] == $wallet['codeSecret']) {
-            return false;
-        }
-    }
-    return true;
+    $doublons = array_filter($wallets, fn($element) =>
+        $element['telephone'] == $wallet['telephone'] ||
+        $element['codeSecret'] == $wallet['codeSecret']
+    );
+
+    return count($doublons) == 0;
 }
 
 function estValideFormatTelephone(array $wallet): bool {

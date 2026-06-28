@@ -138,9 +138,11 @@ function afficheListeTransactionParTelephone(array $transactions, array $wallets
         return;
     }
 
-    foreach ($transactions as $transaction) {
-        if ($transaction['indexClient'] == $index) {
-            echo "Montant : {$transaction['montant']}\n";
-        }
+    $transactionsDuClient = array_filter($transactions, fn($transaction) =>
+        $transaction['indexClient'] == $index
+    );
+
+    foreach ($transactionsDuClient as $transaction) {
+        echo "Montant : {$transaction['montant']}\n";
     }
 }
