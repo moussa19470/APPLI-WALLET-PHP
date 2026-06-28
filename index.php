@@ -1,13 +1,23 @@
 <?php
 
+use function App\Controller\ajouterWallet;
+use function App\Controller\faireUnDepot;
+use function App\Controller\faireUnRetrait;
+use function App\Controller\afficheListeTransaction;
+
 require_once 'controller.php';
 
+// Tableau numerique de wallets
 $wallets = [
     0 => ['client' => 'Moussa BA', 'telephone' => '775788482', 'codeSecret' => '1234', 'solde' => 0],
     1 => ['client' => 'Mr WANE', 'telephone' => '785763489', 'codeSecret' => '1010', 'solde' => 3000]
 ];
 
-$transactions = [];
+$transactions = [
+    0 => ['montant' => +5000, 'frais' => 0, 'indexClient' => 0],
+    1 => ['montant' => -2000, 'frais' => 200, 'indexClient' => 1],
+    2 => ['montant' => -3000, 'frais' => 200, 'indexClient' => 0]
+];
 
 function afficheMenu(): void {
     echo "---Menu Distributeur---\n";
@@ -31,15 +41,15 @@ do {
         case 1:
             ajouterWallet();
             break;
-       case 2:
+        case 2:
             faireUnDepot();
             break;
         case 3:
             faireUnRetrait();
             break;
         case 4:
-          afficheListeTransaction($transactions, $wallets);
-          break;
+            afficheListeTransaction($transactions, $wallets);
+            break;
         case 0:
             break;
         default:

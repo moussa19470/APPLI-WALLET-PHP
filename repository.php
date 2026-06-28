@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Repository;
+
 // Cherche l'index d'un wallet a partir du telephone, -1 si non trouve
 function existTelephone(string $telephone, array $wallets): int {
     $telephones = array_column($wallets, 'telephone');
@@ -22,8 +24,6 @@ function miseAjourSolde(int $index, float $montant, float $frais): void {
     $wallets[$index]['solde'] -= ($montant + $frais);
 }
 
-// Enregistre une transaction. $frais est optionnel, utile pour tracer
-// les frais de retrait dans l'historique (defaut 0 pour un depot).
 function enregistrerUneTransaction(int $index, int $montant, float $frais = 0): void {
     global $transactions;
     $transaction = ['montant' => $montant, 'frais' => $frais, 'indexClient' => $index];

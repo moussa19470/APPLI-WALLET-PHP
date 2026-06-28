@@ -1,5 +1,14 @@
 <?php
 
+namespace App\Services;
+
+use function App\Validator\estVideWallet;
+use function App\Validator\estUniqueDansSystem;
+use function App\Validator\estValideFormatTelephone;
+use function App\Validator\estPositifSolde;
+use function App\Validator\estValideCodeSecret;
+use function App\Validator\estValideLongueurTelephone;
+
 require_once 'validator.php';
 
 function creerWallet(array $wallet, array $wallets): array {
