@@ -35,7 +35,7 @@ do {
             faireUnDepot();
             break;
         case 3:
-            echo "Fonctionnalite Retrait a venir\n";
+            faireUnRetrait();
             break;
         case 4:
             echo "Fonctionnalite Transactions a venir\n";

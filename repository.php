@@ -22,3 +22,8 @@ function enregistrerUneTransaction(int $index, int $montant, float $frais = 0): 
     $transaction = ['montant' => $montant, 'frais' => $frais, 'indexClient' => $index];
     $transactions[] = $transaction;
 }
+
+function miseAjourSolde(int $index, float $montant, float $frais): void {
+    global $wallets;
+    $wallets[$index]['solde'] -= ($montant + $frais);
+}
