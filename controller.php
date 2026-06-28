@@ -50,3 +50,36 @@ function ajouterWallet(): void {
     $wallets[] = $newWallet;
     afficheMessage("Wallet cree avec succes");
 }
+
+function saisirTelephone(): string {
+    return readline("Entrez le numero de telephone : ");
+}
+
+function saisirMontant(): int {
+    return (int) readline("Entrez le montant : ");
+}
+
+// RG 2.1 : depot
+function faireUnDepot(): void {
+    global $wallets, $transactions;
+
+    $telephone = saisirTelephone();
+    $index = existTelephone($telephone, $wallets);
+
+    if ($index == -1) {
+        afficheMessage("Telephone introuvable");
+        return;
+    }
+
+    $montant = saisirMontant();
+
+    if (!montantPositif($montant)) {
+        afficheMessage("Le montant doit etre strictement positif");
+        return;
+    }
+
+    ajouterMontantAuSolde($index, $montant);
+    enregistrerUneTransaction($index, $montant);
+
+    afficheMessage("Depot effectue avec succes");
+}

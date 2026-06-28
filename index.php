@@ -31,8 +31,8 @@ do {
         case 1:
             ajouterWallet();
             break;
-        case 2:
-            echo "Fonctionnalite Depot a venir\n";
+       case 2:
+            faireUnDepot();
             break;
         case 3:
             echo "Fonctionnalite Retrait a venir\n";
