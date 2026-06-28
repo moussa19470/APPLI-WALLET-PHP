@@ -35,11 +35,11 @@ do {
             faireUnDepot();
             break;
         case 3:
-            echo "Fonctionnalite Retrait a venir\n";
+            faireUnRetrait();
             break;
         case 4:
-            echo "Fonctionnalite Transactions a venir\n";
-            break;
+          afficheListeTransaction($transactions, $wallets);
+          break;
         case 0:
             break;
         default:
