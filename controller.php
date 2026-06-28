@@ -110,9 +110,11 @@ function faireUnRetrait(): void {
         afficheMessage("Solde insuffisant pour couvrir le montant et les frais ({$frais} CFA)");
         return;
     }
-
+   
     miseAjourSolde($index, $montant, $frais);
-    enregistrerUneTransaction($index, $montant, $frais);
+    
+    $montantNegatif = -1 * $montant;
+    enregistrerUneTransaction($index, $montantNegatif, $frais);
 
     afficheMessage("Retrait effectue avec succes, frais appliques : {$frais} CFA");
 }
