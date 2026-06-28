@@ -1,0 +1,20 @@
+{
+    "name": "moussa19470/wallet-php",
+    "description": "Application console de gestion de wallet electronique",
+    "type": "project",
+    "authors": [
+        {
+            "name": "moussaba",
+            "email": "moussakhady41@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "files": [
+            "validator.php",
+            "repository.php",
+            "services.php",
+            "controller.php"
+        ]
+    }
+}
