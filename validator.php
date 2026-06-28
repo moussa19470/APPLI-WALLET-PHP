@@ -51,3 +51,10 @@ function estValideCodeSecret(array $wallet): bool {
     }
     return true;
 }
+
+function montantPositif(int $montant): bool {
+    if ($montant <= 0) {
+        return false;
+    }
+    return true;
+}
