@@ -12,6 +12,7 @@ $wallets = [
     0 => ['client' => 'Moussa BA', 'telephone' => '775788482', 'codeSecret' => '1234', 'solde' => 0],
     1 => ['client' => 'Mr WANE', 'telephone' => '785763489', 'codeSecret' => '1010', 'solde' => 3000]
 ];
+dump($wallets);
 $transactions = [
     0 => ['montant' => +5000, 'frais' => 0, 'indexClient' => 0],
     1 => ['montant' => -2000, 'frais' => 200, 'indexClient' => 1],
