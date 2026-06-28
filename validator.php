@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Validator;
+
 function estVideWallet(array $wallet): bool {
     if ($wallet['client'] == '' ||
         $wallet['telephone'] == '' ||

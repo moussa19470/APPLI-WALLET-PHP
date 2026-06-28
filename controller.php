@@ -1,10 +1,54 @@
 <?php
 
+namespace App\Controller;
+
+use function App\Services\creerWallet;
+use function App\Services\calculFrais;
+use function App\Repository\existTelephone;
+use function App\Repository\ajouterMontantAuSolde;
+use function App\Repository\miseAjourSolde;
+use function App\Repository\enregistrerUneTransaction;
+use function App\Validator\estVideWallet;
+use function App\Validator\estPositifSolde;
+use function App\Validator\estValideLongueurTelephone;
+use function App\Validator\estValideFormatTelephone;
+use function App\Validator\estValideCodeSecret;
+use function App\Validator\estUniqueDansSystem;
+use function App\Validator\montantPositif;
+use function App\Validator\estDebitableSolde;
+
 require_once 'services.php';
 require_once 'repository.php';
 
 function afficheMessage(string $message): void {
     echo "Message : {$message}\n";
+}
+
+function afficheListeTransaction(array $transactions, array $wallets): void {
+    foreach ($transactions as $transaction) {
+        echo "Montant : {$transaction['montant']}\n";
+        $indexClient = $transaction['indexClient'];
+        $client = $wallets[$indexClient];
+        echo "Titulaire : {$client['client']}\n";
+    }
+}
+
+function afficheListeTransactionParTelephone(array $transactions, array $wallets): void {
+    $telephone = saisirTelephone();
+    $index = existTelephone($telephone, $wallets);
+
+    if ($index == -1) {
+        afficheMessage("Telephone introuvable");
+        return;
+    }
+
+    $transactionsDuClient = array_filter($transactions, fn($transaction) =>
+        $transaction['indexClient'] == $index
+    );
+
+    foreach ($transactionsDuClient as $transaction) {
+        echo "Montant : {$transaction['montant']}\n";
+    }
 }
 
 function saisirWallet(): array {
@@ -14,6 +58,14 @@ function saisirWallet(): array {
     $wallet['codeSecret'] = readline("Entrez le code secret : ");
     $wallet['solde'] = (int) readline("Entrez le montant du solde : ");
     return $wallet;
+}
+
+function saisirTelephone(): string {
+    return readline("Entrez le numero de telephone : ");
+}
+
+function saisirMontant(): int {
+    return (int) readline("Entrez le montant : ");
 }
 
 function ajouterWallet(): void {
@@ -51,15 +103,6 @@ function ajouterWallet(): void {
     afficheMessage("Wallet cree avec succes");
 }
 
-function saisirTelephone(): string {
-    return readline("Entrez le numero de telephone : ");
-}
-
-function saisirMontant(): int {
-    return (int) readline("Entrez le montant : ");
-}
-
-// RG 2.1 : depot
 function faireUnDepot(): void {
     global $wallets, $transactions;
 
@@ -84,8 +127,6 @@ function faireUnDepot(): void {
     afficheMessage("Depot effectue avec succes");
 }
 
-
-// RG 3.1 / RG 3.2 : retrait avec frais par paliers
 function faireUnRetrait(): void {
     global $wallets, $transactions;
 
@@ -110,39 +151,11 @@ function faireUnRetrait(): void {
         afficheMessage("Solde insuffisant pour couvrir le montant et les frais ({$frais} CFA)");
         return;
     }
-   
-    miseAjourSolde($index, $montant, $frais);
-    
+
     $montantNegatif = -1 * $montant;
+
+    miseAjourSolde($index, $montant, $frais);
     enregistrerUneTransaction($index, $montantNegatif, $frais);
 
     afficheMessage("Retrait effectue avec succes, frais appliques : {$frais} CFA");
-}
-
-
-function afficheListeTransaction(array $transactions, array $wallets): void {
-    foreach ($transactions as $transaction) {
-        echo "Montant : {$transaction['montant']}\n";
-        $indexClient = $transaction['indexClient'];
-        $client = $wallets[$indexClient];
-        echo "Titulaire : {$client['client']}\n";
-    }
-}
-
-function afficheListeTransactionParTelephone(array $transactions, array $wallets): void {
-    $telephone = saisirTelephone();
-    $index = existTelephone($telephone, $wallets);
-
-    if ($index == -1) {
-        afficheMessage("Telephone introuvable");
-        return;
-    }
-
-    $transactionsDuClient = array_filter($transactions, fn($transaction) =>
-        $transaction['indexClient'] == $index
-    );
-
-    foreach ($transactionsDuClient as $transaction) {
-        echo "Montant : {$transaction['montant']}\n";
-    }
 }
