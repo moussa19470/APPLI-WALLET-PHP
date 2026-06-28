@@ -58,3 +58,10 @@ function montantPositif(int $montant): bool {
     }
     return true;
 }
+
+function estDebitableSolde(int $index, float $montant, float $frais, array $wallets): bool {
+    if ($wallets[$index]['solde'] >= $montant + $frais) {
+        return true;
+    }
+    return false;
+}
