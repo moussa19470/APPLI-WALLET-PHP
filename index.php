@@ -2,7 +2,11 @@
 
 require_once 'controller.php';
 
-$wallets = [];
+$wallets = [
+    0 => ['client' => 'Moussa BA', 'telephone' => '775788482', 'codeSecret' => '1234', 'solde' => 0],
+    1 => ['client' => 'Mr WANE', 'telephone' => '785763489', 'codeSecret' => '1010', 'solde' => 3000]
+];
+
 $transactions = [];
 
 function afficheMenu(): void {
@@ -25,7 +29,7 @@ do {
 
     switch ($choix) {
         case 1:
-            echo "Fonctionnalite Creer Wallet a venir\n";
+            ajouterWallet();
             break;
         case 2:
             echo "Fonctionnalite Depot a venir\n";
