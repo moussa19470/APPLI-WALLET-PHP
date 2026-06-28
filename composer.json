@@ -8,7 +8,9 @@
             "email": "moussakhady41@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "symfony/var-dumper": "^7.4"
+    },
     "autoload": {
         "files": [
             "validator.php",
